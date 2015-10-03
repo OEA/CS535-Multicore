@@ -1,4 +1,8 @@
-
+/*
+ * Author: @OEASLAN (Ömer Aslan)
+ * Student Number: S001390
+ * Date: 3 Oct. 2015
+ * */
 public class HatSwap {
     public static final int NUM_PENGUIN = 5;
     public static void main(String[] args) throws InterruptedException{
