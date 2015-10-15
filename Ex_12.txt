@@ -1,0 +1,10 @@
+Question:
+---------
+
+Give a scenario (i.e. a trace of events)
+to show that the Filter lock allows some threads
+to overtake others an arbitrary number of times.
+
+Answer:
+-------
+

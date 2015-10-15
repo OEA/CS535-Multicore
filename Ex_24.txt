@@ -1,0 +1,8 @@
+# Question:
+-----------
+For each of the histories shown in Figs. 3.13 and 3.14,
+are they sequentially consistent? Linearizable? Justify your answer.
+
+# Answer:
+---------
+
