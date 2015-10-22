@@ -14,6 +14,8 @@ It is linearizable for that order:
   * Write 2
   * Read 2
 
+(Added solution to repo as Solution24.JPG)
+
 Figure 3.14;
 
 It is not linearizable because when we write 2 we can't read 1 so,  it is not linearizable.
