@@ -6,3 +6,16 @@ are they sequentially consistent? Linearizable? Justify your answer.
 # Answer:
 ---------
 
+Figure 3.13;
+
+It is linearizable for that order:
+  * Write 1
+  * Read 1
+  * Write 2
+  * Read 2
+
+Figure 3.14;
+
+It is not linearizable because when we write 2 we can't read 1 so,  it is not linearizable.
+
+Also they are sequentially consistent. We can re-order these without overlapping using multithread.
