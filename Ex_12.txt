@@ -8,4 +8,6 @@ to overtake others an arbitrary number of times.
 Answer:
 -------
 
-For instance, we have N threads for this lock. 1st thread will acquire the lock and go inside the lock method and some how it is paused without setting victim.After that, 2nd thread goes in the lock method and sets itself as a victim and 2nd thread can go up the upstairs and it overtake the 1st thread.
+For instance, we have N threads for this lock. 
+1st thread will acquire the lock and go inside the lock method and some how it is paused without setting victim.
+After that, 2nd thread goes in the lock method and sets itself as a victim and 2nd thread can go up the upstairs and it overtake the 1st thread.
