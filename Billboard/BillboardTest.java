@@ -1,6 +1,11 @@
+import java.util.concurrent.locks.ReentrantLock;
+
+// Göktuğ Berk Ulu - Ömer Emre Aslan
+
 class Sign {
     private char letter;
     public Sign next;
+    private ReentrantLock rLock = new ReentrantLock();
     
     public Sign(char c) {
         // creating a letter sign is not cheap
@@ -17,6 +22,14 @@ class Sign {
         } catch(InterruptedException e) {}
         return letter;
     }
+    
+    public void lock(){
+        rLock.lock();
+    }
+    
+    public void unlock() {
+        rLock.unlock();
+    }
 }
 
 class Billboard {
@@ -25,21 +38,34 @@ class Billboard {
     public void write(String message) {
         Sign previous = head;
         Sign current = head.next;
+        previous.lock();
+        if(current != null)
+            current.lock();
         for(int i=0; i < message.length(); i++) {
             Sign newSign = new Sign(message.charAt(i));
             if (current != null)
                 newSign.next = current.next;
             previous.next = newSign;
+            previous.unlock();
             previous = newSign;
+            previous.lock();
+            if(current != null)
+                current.unlock();
             current = newSign.next;
+            if(current != null)
+                current.lock();
         }
+        previous.unlock();
     }
     
     public String read() {
         Sign current = head.next;
+        
         String message = "";
         while(current != null) {
+            current.lock();
             message += current.getLetter();
+            current.unlock();
             current = current.next;
         }
         return message;
@@ -52,7 +78,7 @@ class Writer extends Thread {
     public Writer(Billboard bb) {
         this.bb = bb;
     }
-
+    
     public void run() {
         while(true) {
             bb.write("WASH THE DOG");
@@ -73,7 +99,7 @@ class Reader extends Thread {
     public Reader(Billboard bb) {
         this.bb = bb;
     }
-
+    
     public void run() {
         while(true) {
             String message = bb.read();
@@ -88,14 +114,14 @@ class Reader extends Thread {
 public class BillboardTest {
     public static void main(String[] args) throws InterruptedException {
         Billboard bb = new Billboard();
-
+        
         // Sequential test
         bb.write("WASH THE DOG");
         System.out.println("Message: " + bb.read());
         bb.write("SELL THE CAR");
         System.out.println("Message: " + bb.read());
         System.out.println();
-
+        
         // Parallel test
         Writer writer1 = new Writer(bb);
         Reader reader1 = new Reader(bb);
@@ -103,10 +129,9 @@ public class BillboardTest {
         writer1.start();
         reader1.start();
         reader2.start();
-
+        
         writer1.join();
         reader1.join();
         reader2.join();
     }
 }
-        
